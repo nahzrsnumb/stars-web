@@ -1,12 +1,22 @@
 import React from 'react';
 import { Menu, ChevronRight, Star, CheckCircle, MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
+import { client } from '../sanity/lib/client';
 
-export default function StarsNettoyageLanding() {
+export default async function StarsNettoyageLanding() {
+  // 1. LA CONSULTA (GROQ): Buscamos todas las propiedades publicadas y sus fotos
+  const properties = await client.fetch(`*[_type == "property"]{
+    _id,
+    name,
+    description,
+    price,
+    "imageUrl": mainImage.asset->url
+  }`);
+
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       
-      {/* 1. Navbar (Sticky & Glassmorphism) */}
+      {/* 1. Navbar */}
       <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="text-2xl font-serif tracking-widest text-slate-900">STARS<span className="text-amber-600">.</span></div>
@@ -46,16 +56,7 @@ export default function StarsNettoyageLanding() {
         </div>
       </section>
 
-      {/* 3. Trust Bar */}
-      <section className="bg-white py-12 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-12 md:gap-24 opacity-60 grayscale">
-          <div className="text-xl font-serif font-bold tracking-wider">HÔTEL VALAIS</div>
-          <div className="text-xl font-serif font-bold tracking-wider">CHALET ALPINE</div>
-          <div className="text-xl font-serif font-bold tracking-wider">SUISSE RESORT</div>
-        </div>
-      </section>
-
-      {/* 4. Services */}
+      {/* 3. Services */}
       <section id="services" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -81,8 +82,47 @@ export default function StarsNettoyageLanding() {
         </div>
       </section>
 
+      {/* 4. SECCIÓN DINÁMICA: PROPIEDADES (Conectado a Sanity) */}
+      <section id="about" className="py-24 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">Propriétés sous notre gestion</h2>
+            <div className="w-12 h-0.5 bg-amber-600 mx-auto"></div>
+            <p className="mt-6 text-slate-500 font-light max-w-2xl mx-auto">Découvrez quelques-uns des chalets et hôtels d'exception qui nous font confiance pour leur entretien quotidien.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {properties.map((prop: any) => (
+              <div key={prop._id} className="bg-slate-50 border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col">
+                {prop.imageUrl ? (
+                  <div className="h-64 overflow-hidden relative">
+                    <img src={prop.imageUrl} alt={prop.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    {prop.price && (
+                      <div className="absolute bottom-4 right-4 bg-slate-900/90 backdrop-blur-sm text-white text-xs font-bold px-4 py-2 tracking-widest">
+                        {prop.price}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="h-64 bg-slate-200 flex items-center justify-center">
+                    <span className="text-slate-400 text-sm tracking-widest font-bold">STARS.</span>
+                  </div>
+                )}
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="text-xl font-serif mb-3 text-slate-900">{prop.name}</h3>
+                  <p className="text-slate-500 font-light text-sm line-clamp-3 mb-6 flex-1">{prop.description}</p>
+                  <a href="#" className="inline-flex items-center text-xs font-bold tracking-wider text-slate-900 hover:text-amber-600 transition-colors mt-auto">
+                    VOIR DÉTAILS <ChevronRight className="w-4 h-4 ml-1" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 5. Pourquoi Nous */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div>
             <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2070" alt="Detail cleaning" className="w-full h-auto object-cover rounded-sm shadow-2xl" />
@@ -106,7 +146,7 @@ export default function StarsNettoyageLanding() {
         </div>
       </section>
 
-      {/* 7. Proceso de Trabajo */}
+      {/* 6. Proceso de Trabajo */}
       <section id="process" className="py-24 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -130,7 +170,7 @@ export default function StarsNettoyageLanding() {
         </div>
       </section>
 
-      {/* 10. Final CTA con el Componente Importado */}
+      {/* 7. Final CTA con el Formulario Importado */}
       <section className="py-24 bg-amber-600 text-center relative">
         <div className="max-w-3xl mx-auto px-6 relative z-10">
           <h2 className="text-4xl font-serif text-white mb-6">Prêt à élever le standard de votre propriété ?</h2>
@@ -141,7 +181,7 @@ export default function StarsNettoyageLanding() {
         </div>
       </section>
 
-      {/* 11. Footer */}
+      {/* 8. Footer */}
       <footer className="bg-slate-950 text-slate-400 pt-48 pb-16 border-t border-slate-900">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div>
