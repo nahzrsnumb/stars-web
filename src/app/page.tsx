@@ -1,10 +1,10 @@
 import React from 'react';
-import { Menu, ChevronRight, Star, CheckCircle, MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
+import { Menu, ChevronRight, Star, CheckCircle, MapPin, Phone, Mail, Clock, ShieldCheck, Sparkles } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
 import { client } from '../sanity/lib/client';
 
 export default async function StarsNettoyageLanding() {
-  // 1. LA CONSULTA (GROQ): Buscamos todas las propiedades publicadas y sus fotos
+  // 1. LA CONSULTA (GROQ): Buscamos los casos de éxito/referencias
   const properties = await client.fetch(`*[_type == "property"]{
     _id,
     name,
@@ -21,12 +21,15 @@ export default async function StarsNettoyageLanding() {
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="text-2xl font-serif tracking-widest text-slate-900">STARS<span className="text-amber-600">.</span></div>
           <div className="hidden md:flex space-x-8 text-sm font-medium tracking-wide">
+            <a href="#about-us" className="hover:text-amber-600 transition-colors">Qui sommes-nous</a>
             <a href="#services" className="hover:text-amber-600 transition-colors">Services</a>
-            <a href="#about" className="hover:text-amber-600 transition-colors">Propriétés</a>
-            <a href="#process" className="hover:text-amber-600 transition-colors">Notre Approche</a>
+            <a href="#references" className="hover:text-amber-600 transition-colors">Références</a>
           </div>
           <div className="flex items-center space-x-6">
-            <div className="text-xs font-semibold tracking-widest text-slate-500">FR | EN</div>
+            <a href="tel:+41798245911" className="hidden md:flex items-center text-sm font-medium hover:text-amber-600 transition-colors">
+              <Phone className="w-4 h-4 mr-2" />
+              +41 79 824 59 11
+            </a>
             <button className="hidden md:block px-6 py-2.5 bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-all">
               Demander un devis
             </button>
@@ -37,58 +40,112 @@ export default async function StarsNettoyageLanding() {
 
       {/* 2. Hero Section */}
       <section className="relative h-screen flex items-center justify-center bg-slate-900 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070')] bg-cover bg-center opacity-40"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2070')] bg-cover bg-center opacity-30"></div>
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto mt-20">
           <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-tight">
-            L'excellence du propre, <br/><span className="text-amber-500 font-light italic">signature suisse.</span>
+            L'excellence et l'efficacité <br/><span className="text-amber-500 font-light italic">au cœur de notre métier.</span>
           </h1>
           <p className="text-lg md:text-xl text-slate-300 mb-10 font-light tracking-wide max-w-2xl mx-auto">
-            Gestion et entretien haut de gamme pour chalets et hôtels de luxe en Suisse romande.
+            Spécialisés dans le nettoyage professionnel et la conciergerie sur mesure. Nous accompagnons les entreprises et les particuliers exigeants à la recherche d'un service fiable, discret et impeccable.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="w-full sm:w-auto px-8 py-4 bg-amber-600 text-white text-sm font-bold tracking-widest hover:bg-amber-700 transition-all">
+            <a href="#contact" className="w-full sm:w-auto px-8 py-4 bg-amber-600 text-white text-sm font-bold tracking-widest hover:bg-amber-700 transition-all text-center">
               DEMANDER UN DEVIS
-            </button>
-            <button className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white text-white text-sm font-bold tracking-widest hover:bg-white hover:text-slate-900 transition-all">
+            </a>
+            <a href="#services" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white text-white text-sm font-bold tracking-widest hover:bg-white hover:text-slate-900 transition-all text-center">
               DÉCOUVRIR NOS SERVICES
-            </button>
+            </a>
           </div>
         </div>
       </section>
 
-      {/* 3. Services */}
+      {/* 3. Qui Sommes-Nous */}
+      <section id="about-us" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">Qui sommes-nous ?</h2>
+            <div className="w-12 h-0.5 bg-amber-600 mb-8"></div>
+            <p className="text-slate-600 font-light text-lg leading-relaxed mb-6">
+              <strong>Stars Nettoyages</strong> est une entreprise de services de nettoyage basée à Veysonnaz, Valais. Depuis sa création en 2021 par Rebeca González, elle s'est imposée comme une référence en matière de propreté professionnelle et de services sur mesure.
+            </p>
+            <p className="text-slate-600 font-light text-lg leading-relaxed mb-6">
+              Nos étoiles incarnent l'alliance entre le savoir-faire professionnel et la modernité. Animés par la passion de l'excellence, nous nous engageons à offrir des prestations haut de gamme, alliant efficacité, discrétion et qualité irréprochable.
+            </p>
+            <div className="inline-flex items-center text-sm font-bold tracking-widest text-amber-600 uppercase">
+              <MapPin className="w-4 h-4 mr-2" /> Zone principale: Valais
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1000" alt="Chalet de luxe" className="w-full h-64 object-cover rounded-sm shadow-lg mt-8" />
+            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1000" alt="Nettoyage professionnel" className="w-full h-64 object-cover rounded-sm shadow-lg" />
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Services Oficiales */}
       <section id="services" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">Nos Services Premium</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">Nos Services Spécialisés</h2>
             <div className="w-12 h-0.5 bg-amber-600 mx-auto"></div>
+            <p className="mt-6 text-slate-500 font-light max-w-2xl mx-auto">Une gamme de services professionnels adaptés à vos exigences spécifiques. Résidentiel, commercial ou fin de chantier, nous vous offrons une propreté absolue.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: "Chalets de Luxe", desc: "Entretien méticuleux adapté aux matériaux nobles et surfaces délicates." },
-              { title: "Housekeeping", desc: "Standard hôtelier 5 étoiles pour garantir une expérience client parfaite." },
-              { title: "Conciergerie", desc: "Gestion complète de vos propriétés, check-in, check-out et intendance." }
-            ].map((service, idx) => (
-              <div key={idx} className="bg-white p-10 border border-slate-100 hover:shadow-xl transition-shadow duration-300 group">
-                <Star className="w-8 h-8 text-amber-600 mb-6 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
-                <h3 className="text-xl font-serif mb-3">{service.title}</h3>
-                <p className="text-slate-500 font-light leading-relaxed mb-6">{service.desc}</p>
-                <a href="#" className="inline-flex items-center text-sm font-semibold tracking-wider text-slate-900 group-hover:text-amber-600 transition-colors">
-                  SAVOIR PLUS <ChevronRight className="w-4 h-4 ml-1" />
-                </a>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Service 1 */}
+            <div className="bg-white p-10 border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+              <Sparkles className="w-8 h-8 text-amber-600 mb-6" strokeWidth={1.5} />
+              <h3 className="text-xl font-serif mb-3">Nettoyage fin de chantier</h3>
+              <p className="text-slate-500 font-light leading-relaxed mb-6">Nous garantissons que votre espace est impeccable et prêt à l'emploi. Intervention rapide, élimination des résidus de travaux et espace accueillant.</p>
+              <div className="flex flex-col space-y-2 text-xs font-semibold text-slate-400 tracking-wider">
+                <span className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-amber-500" /> Élimination des résidus</span>
+                <span className="flex items-center"><MapPin className="w-3 h-3 mr-2 text-slate-400" /> Valais et Vaud</span>
               </div>
-            ))}
+            </div>
+
+            {/* Service 2 */}
+            <div className="bg-white p-10 border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+              <ShieldCheck className="w-8 h-8 text-amber-600 mb-6" strokeWidth={1.5} />
+              <h3 className="text-xl font-serif mb-3">Nettoyage de fin de bail</h3>
+              <p className="text-slate-500 font-light leading-relaxed mb-6">Remise de logement en toute tranquillité. Un nettoyage complet, rapide et fiable avec garantie de propreté pour l'état des lieux.</p>
+              <div className="flex flex-col space-y-2 text-xs font-semibold text-slate-400 tracking-wider">
+                <span className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-amber-500" /> Nettoyage garanti</span>
+                <span className="flex items-center"><MapPin className="w-3 h-3 mr-2 text-slate-400" /> Valais et Vaud</span>
+              </div>
+            </div>
+
+            {/* Service 3 */}
+            <div className="bg-white p-10 border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+              <Clock className="w-8 h-8 text-amber-600 mb-6" strokeWidth={1.5} />
+              <h3 className="text-xl font-serif mb-3">Bureaux et Conciergerie sur mesure</h3>
+              <p className="text-slate-500 font-light leading-relaxed mb-6">Espaces propres, sains et impeccables pour vos immeubles, bureaux et écoles. Une approche flexible et totalement sur mesure.</p>
+              <div className="flex flex-col space-y-2 text-xs font-semibold text-slate-400 tracking-wider">
+                <span className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-amber-500" /> Flexibilité totale</span>
+                <span className="flex items-center"><MapPin className="w-3 h-3 mr-2 text-slate-400" /> Valais</span>
+              </div>
+            </div>
+
+            {/* Service 4 */}
+            <div className="bg-white p-10 border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+              <Star className="w-8 h-8 text-amber-600 mb-6" strokeWidth={1.5} />
+              <h3 className="text-xl font-serif mb-3">Chalets, Vacances & Airbnb</h3>
+              <p className="text-slate-500 font-light leading-relaxed mb-6">Nettoyage et blanchisserie au départ des clients. Nous assurons une maison accueillante pour un séjour agréable. Forfaits personnalisés.</p>
+              <div className="flex flex-col space-y-2 text-xs font-semibold text-slate-400 tracking-wider">
+                <span className="flex items-center"><CheckCircle className="w-3 h-3 mr-2 text-amber-500" /> Forfaits Nettoyage et Blanchisserie</span>
+                <span className="flex items-center"><MapPin className="w-3 h-3 mr-2 text-slate-400" /> Veysonnaz, Les Collons, Les Masses, Hérémence, Nendaz, Crans-Montana</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. SECCIÓN DINÁMICA: PROPIEDADES (Conectado a Sanity) */}
-      <section id="about" className="py-24 bg-white border-t border-slate-100">
+      {/* 5. SECCIÓN DINÁMICA: PORTAFOLIO DE LIMPIEZA (Sanity) */}
+      <section id="references" className="py-24 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">Propriétés sous notre gestion</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">Nos Références d'Exception</h2>
             <div className="w-12 h-0.5 bg-amber-600 mx-auto"></div>
-            <p className="mt-6 text-slate-500 font-light max-w-2xl mx-auto">Découvrez quelques-uns des chalets et hôtels d'exception qui nous font confiance pour leur entretien quotidien.</p>
+            <p className="mt-6 text-slate-500 font-light max-w-2xl mx-auto">Découvrez quelques-uns des chantiers et chalets de luxe qui nous font confiance pour un entretien d'une propreté absolue.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -98,7 +155,7 @@ export default async function StarsNettoyageLanding() {
                   <div className="h-64 overflow-hidden relative">
                     <img src={prop.imageUrl} alt={prop.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     {prop.price && (
-                      <div className="absolute bottom-4 right-4 bg-slate-900/90 backdrop-blur-sm text-white text-xs font-bold px-4 py-2 tracking-widest">
+                      <div className="absolute bottom-4 right-4 bg-amber-600/90 backdrop-blur-sm text-white text-xs font-bold px-4 py-2 tracking-widest uppercase">
                         {prop.price}
                       </div>
                     )}
@@ -111,9 +168,6 @@ export default async function StarsNettoyageLanding() {
                 <div className="p-8 flex-1 flex flex-col">
                   <h3 className="text-xl font-serif mb-3 text-slate-900">{prop.name}</h3>
                   <p className="text-slate-500 font-light text-sm line-clamp-3 mb-6 flex-1">{prop.description}</p>
-                  <a href="#" className="inline-flex items-center text-xs font-bold tracking-wider text-slate-900 hover:text-amber-600 transition-colors mt-auto">
-                    VOIR DÉTAILS <ChevronRight className="w-4 h-4 ml-1" />
-                  </a>
                 </div>
               </div>
             ))}
@@ -121,59 +175,11 @@ export default async function StarsNettoyageLanding() {
         </div>
       </section>
 
-      {/* 5. Pourquoi Nous */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div>
-            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2070" alt="Detail cleaning" className="w-full h-auto object-cover rounded-sm shadow-2xl" />
-          </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-8">La Différence Stars Nettoyage</h2>
-            <div className="space-y-6">
-              {[
-                "Personnel de confiance, strictement sélectionné.",
-                "Produits éco-premium respectueux de l'environnement.",
-                "Disponibilité 24/7 pour les urgences hôtelières.",
-                "Attention maniaque aux micro-détails."
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-amber-600 mr-4 flex-shrink-0" strokeWidth={1.5} />
-                  <p className="text-slate-600 font-light text-lg">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Proceso de Trabajo */}
-      <section id="process" className="py-24 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif mb-4">Notre Méthodologie</h2>
-            <div className="w-12 h-0.5 bg-amber-600 mx-auto"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-800">
-            {[
-              { step: "01", title: "Contact", desc: "Analyse initiale de vos besoins." },
-              { step: "02", title: "Visite", desc: "Évaluation sur site et devis précis." },
-              { step: "03", title: "Exécution", desc: "Intervention selon nos standards." },
-              { step: "04", title: "Contrôle", desc: "Suivi rigoureux de la qualité." }
-            ].map((p, idx) => (
-              <div key={idx} className="pt-8 md:pt-0 md:px-8">
-                <div className="text-amber-500/50 font-serif text-5xl mb-4">{p.step}</div>
-                <h4 className="text-lg font-bold tracking-wider mb-2">{p.title}</h4>
-                <p className="text-slate-400 font-light">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Final CTA con el Formulario Importado */}
-      <section className="py-24 bg-amber-600 text-center relative">
+      {/* 6. Final CTA */}
+      <section id="contact" className="py-24 bg-amber-600 text-center relative">
         <div className="max-w-3xl mx-auto px-6 relative z-10">
-          <h2 className="text-4xl font-serif text-white mb-6">Prêt à élever le standard de votre propriété ?</h2>
+          <h2 className="text-4xl font-serif text-white mb-6">Prêt à garantir un environnement impeccable ?</h2>
+          <p className="text-amber-100 mb-8">Chaque intervention est réalisée avec rigueur, respect des délais et souci du détail.</p>
         </div>
         
         <div className="relative z-20 -mb-32">
@@ -181,27 +187,28 @@ export default async function StarsNettoyageLanding() {
         </div>
       </section>
 
-      {/* 8. Footer */}
+      {/* 7. Footer */}
       <footer className="bg-slate-950 text-slate-400 pt-48 pb-16 border-t border-slate-900">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div>
             <div className="text-2xl font-serif tracking-widest text-white mb-6">STARS<span className="text-amber-600">.</span></div>
-            <p className="font-light text-sm">L'excellence du propre en Suisse. Services dédiés aux professionnels et particuliers exigeants.</p>
+            <p className="font-light text-sm leading-relaxed">Créée en 2021, Stars Nettoyages est votre partenaire de confiance pour la propreté professionnelle et les services sur mesure en Valais.</p>
           </div>
           <div>
             <h4 className="text-white font-bold tracking-wider mb-6">SERVICES</h4>
             <ul className="space-y-3 text-sm font-light">
-              <li><a href="#" className="hover:text-amber-500 transition-colors">Chalets de luxe</a></li>
-              <li><a href="#" className="hover:text-amber-500 transition-colors">Hôtellerie</a></li>
-              <li><a href="#" className="hover:text-amber-500 transition-colors">Fin de chantier</a></li>
+              <li><a href="#services" className="hover:text-amber-500 transition-colors">Fin de chantier</a></li>
+              <li><a href="#services" className="hover:text-amber-500 transition-colors">Fin de bail</a></li>
+              <li><a href="#services" className="hover:text-amber-500 transition-colors">Conciergerie</a></li>
+              <li><a href="#services" className="hover:text-amber-500 transition-colors">Chalets & Airbnb</a></li>
             </ul>
           </div>
           <div>
             <h4 className="text-white font-bold tracking-wider mb-6">CONTACT</h4>
             <ul className="space-y-3 text-sm font-light">
-              <li className="flex items-center"><Phone className="w-4 h-4 mr-3" /> +41 00 000 00 00</li>
-              <li className="flex items-center"><Mail className="w-4 h-4 mr-3" /> contact@starsnettoyage.ch</li>
-              <li className="flex items-center"><MapPin className="w-4 h-4 mr-3" /> Veysonnaz, Valais, Suisse</li>
+              <li className="flex items-center"><Phone className="w-4 h-4 mr-3 text-amber-500" /> +41 79 824 59 11</li>
+              <li className="flex items-center"><Mail className="w-4 h-4 mr-3 text-amber-500" /> contact@starsnettoyage.ch</li>
+              <li className="flex items-center"><MapPin className="w-4 h-4 mr-3 text-amber-500" /> Veysonnaz, Valais, Suisse</li>
             </ul>
           </div>
           <div>
@@ -213,7 +220,7 @@ export default async function StarsNettoyageLanding() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-800 text-xs font-light text-center md:text-left flex flex-col md:flex-row justify-between">
-          <p>© 2026 Stars Nettoyage. Tous droits réservés.</p>
+          <p>© 2026 Stars Nettoyages. Tous droits réservés.</p>
           <p className="mt-2 md:mt-0">Design & Code par Impulso Eficiente</p>
         </div>
       </footer>
